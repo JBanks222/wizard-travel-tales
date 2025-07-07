@@ -2,54 +2,54 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, BookOpen, Feather, Users } from "lucide-react";
+import { MapPin, BookOpen, Feather, Users, Globe, Camera } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
   const featuredStories = [
     {
-      title: "The Dragon's Lost Treasure",
-      author: "Gandalf the Wise",
-      excerpt: "Deep in the Misty Mountains, I discovered an ancient dragon's hoard...",
-      tags: ["Adventure", "Dragons", "Treasure"],
+      title: "Hidden Gems of Patagonia",
+      author: "Sarah Chen",
+      excerpt: "Discovering untouched landscapes and local communities in the heart of South America...",
+      tags: ["Adventure", "Nature", "South America"],
       likes: 127
     },
     {
-      title: "Potion Brewing Gone Wrong",
-      author: "Hermione Spellcaster",
-      excerpt: "What started as a simple love potion turned into a comedy of magical errors...",
-      tags: ["Comedy", "Potions", "Magic"],
+      title: "Street Food Adventures in Bangkok",
+      author: "Marcus Rodriguez",
+      excerpt: "A culinary journey through the vibrant markets and hidden food stalls of Thailand's capital...",
+      tags: ["Food", "Culture", "Asia"],
       likes: 89
     },
     {
-      title: "The Enchanted Forest's Secret",
-      author: "Merlin Stormweaver",
-      excerpt: "The ancient trees whispered secrets that changed my understanding of magic...",
-      tags: ["Mystery", "Nature", "Ancient Magic"],
+      title: "Northern Lights in Iceland",
+      author: "Elena Johansson",
+      excerpt: "Chasing the aurora borealis across Iceland's dramatic winter landscape...",
+      tags: ["Photography", "Nature", "Europe"],
       likes: 156
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-white">
       {/* Navigation Header */}
-      <header className="border-b border-purple-700/50 bg-black/20 backdrop-blur-sm">
+      <header className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Sparkles className="h-8 w-8 text-yellow-400" />
-            <h1 className="text-2xl font-bold text-white">Wizard Travel Tales</h1>
+            <Globe className="h-8 w-8 text-blue-600" />
+            <h1 className="text-2xl font-bold text-gray-900">TravelTales</h1>
           </div>
           <nav className="flex items-center space-x-4">
             <Link to="/stories">
-              <Button variant="ghost" className="text-white hover:bg-purple-700/50">
+              <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
                 <BookOpen className="mr-2 h-4 w-4" />
                 Browse Stories
               </Button>
             </Link>
             <Link to="/write">
-              <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                 <Feather className="mr-2 h-4 w-4" />
-                Write Tale
+                Share Story
               </Button>
             </Link>
           </nav>
@@ -57,97 +57,103 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl font-bold text-white mb-6">
-            Share Your Magical Adventures
-          </h2>
-          <p className="text-xl text-purple-200 mb-8">
-            A mystical platform where wizards from all realms gather to share their most extraordinary tales of magic, wonder, and adventure.
-          </p>
-          <div className="flex justify-center space-x-4">
-            <Link to="/stories">
-              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white">
-                <BookOpen className="mr-2 h-5 w-5" />
-                Explore Tales
-              </Button>
-            </Link>
-            <Link to="/write">
-              <Button size="lg" variant="outline" className="border-purple-400 text-purple-200 hover:bg-purple-700/50">
-                <Feather className="mr-2 h-5 w-5" />
-                Share Your Story
-              </Button>
-            </Link>
+      <section className="bg-gradient-to-r from-blue-50 to-indigo-100 py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-5xl font-bold text-gray-900 mb-6">
+              Share Your Travel Adventures
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Connect with fellow travelers, discover amazing destinations, and share your most memorable journeys with a passionate community.
+            </p>
+            <div className="flex justify-center space-x-4">
+              <Link to="/stories">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  Explore Stories
+                </Button>
+              </Link>
+              <Link to="/write">
+                <Button size="lg" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
+                  <Feather className="mr-2 h-5 w-5" />
+                  Share Your Story
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Stories */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-white mb-4">Featured Tales</h3>
-          <p className="text-purple-200">Discover the most enchanting stories from our community</p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredStories.map((story, index) => (
-            <Card key={index} className="bg-purple-800/30 border-purple-700/50 backdrop-blur-sm hover:bg-purple-700/40 transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="text-white">{story.title}</CardTitle>
-                <CardDescription className="text-purple-200">by {story.author}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-purple-100 mb-4">{story.excerpt}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {story.tags.map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="secondary" className="bg-purple-600/50 text-purple-100">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-purple-200 text-sm">{story.likes} likes</span>
-                  <Button size="sm" variant="ghost" className="text-purple-200 hover:bg-purple-600/50">
-                    Read More
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Featured Stories</h3>
+            <p className="text-gray-600">Discover inspiring travel experiences from our community</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredStories.map((story, index) => (
+              <Card key={index} className="border border-gray-200 hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                  <CardTitle className="text-gray-900">{story.title}</CardTitle>
+                  <CardDescription className="text-gray-600">by {story.author}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700 mb-4">{story.excerpt}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {story.tags.map((tag, tagIndex) => (
+                      <Badge key={tagIndex} variant="secondary" className="bg-blue-100 text-blue-800">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-500 text-sm">{story.likes} likes</span>
+                    <Button size="sm" variant="ghost" className="text-blue-600 hover:bg-blue-50">
+                      Read More
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <div className="bg-purple-600/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="h-8 w-8 text-purple-200" />
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Camera className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Share Your Journey</h4>
+              <p className="text-gray-600">Document your travels with photos, stories, and tips for fellow adventurers.</p>
             </div>
-            <h4 className="text-xl font-semibold text-white mb-2">Magical Stories</h4>
-            <p className="text-purple-200">Share tales of your most extraordinary magical adventures and discoveries.</p>
-          </div>
-          <div className="text-center">
-            <div className="bg-purple-600/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <Users className="h-8 w-8 text-purple-200" />
+            <div className="text-center">
+              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Travel Community</h4>
+              <p className="text-gray-600">Connect with like-minded travelers and discover new perspectives on destinations.</p>
             </div>
-            <h4 className="text-xl font-semibold text-white mb-2">Wizard Community</h4>
-            <p className="text-purple-200">Connect with fellow wizards and learn from their experiences across the realms.</p>
-          </div>
-          <div className="text-center">
-            <div className="bg-purple-600/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <Sparkles className="h-8 w-8 text-purple-200" />
+            <div className="text-center">
+              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <MapPin className="h-8 w-8 text-blue-600" />
+              </div>
+              <h4 className="text-xl font-semibold text-gray-900 mb-2">Discover Places</h4>
+              <p className="text-gray-600">Find hidden gems and popular destinations through authentic traveler experiences.</p>
             </div>
-            <h4 className="text-xl font-semibold text-white mb-2">Enchanted Experience</h4>
-            <p className="text-purple-200">Immerse yourself in a beautifully crafted magical storytelling platform.</p>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-purple-700/50 bg-black/20 backdrop-blur-sm mt-16">
-        <div className="container mx-auto px-4 py-8 text-center">
-          <p className="text-purple-200">© 2024 Wizard Travel Tales. All magical rights reserved.</p>
+      <footer className="border-t border-gray-200 bg-white py-8">
+        <div className="container mx-auto px-4 text-center">
+          <p className="text-gray-600">© 2024 TravelTales. All rights reserved.</p>
         </div>
       </footer>
     </div>

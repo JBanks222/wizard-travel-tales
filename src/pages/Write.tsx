@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, ArrowLeft, Plus, X, Send } from "lucide-react";
+import { Globe, ArrowLeft, Plus, X, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -36,16 +36,15 @@ const Write = () => {
     if (!title.trim() || !content.trim() || !author.trim()) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields to share your tale.",
+        description: "Please fill in all required fields to share your story.",
         variant: "destructive",
       });
       return;
     }
 
-    // Here you would typically send the data to a backend
     toast({
-      title: "Tale Shared Successfully! ✨",
-      description: "Your magical story has been added to the collection.",
+      title: "Story Shared Successfully! ✨",
+      description: "Your travel story has been added to the collection.",
     });
 
     // Reset form
@@ -58,20 +57,20 @@ const Write = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-gray-50">
       {/* Navigation Header */}
-      <header className="border-b border-purple-700/50 bg-black/20 backdrop-blur-sm">
+      <header className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link to="/">
-              <Button variant="ghost" size="sm" className="text-white hover:bg-purple-700/50">
+              <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back
               </Button>
             </Link>
             <div className="flex items-center space-x-2">
-              <Sparkles className="h-6 w-6 text-yellow-400" />
-              <h1 className="text-xl font-bold text-white">Write Your Tale</h1>
+              <Globe className="h-6 w-6 text-blue-600" />
+              <h1 className="text-xl font-bold text-gray-900">Share Your Story</h1>
             </div>
           </div>
         </div>
@@ -81,89 +80,89 @@ const Write = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Form */}
           <div className="lg:col-span-2">
-            <Card className="bg-purple-800/30 border-purple-700/50 backdrop-blur-sm">
+            <Card className="bg-white border border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Sparkles className="h-5 w-5 mr-2 text-yellow-400" />
-                  Share Your Magical Adventure
+                <CardTitle className="text-gray-900 flex items-center">
+                  <Globe className="h-5 w-5 mr-2 text-blue-600" />
+                  Share Your Travel Experience
                 </CardTitle>
-                <CardDescription className="text-purple-200">
-                  Tell fellow wizards about your extraordinary journey
+                <CardDescription className="text-gray-600">
+                  Tell fellow travelers about your amazing journey
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <form onSubmit={handleSubmit}>
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="author" className="text-purple-200">
-                        Your Wizard Name *
+                      <Label htmlFor="author" className="text-gray-700">
+                        Your Name *
                       </Label>
                       <Input
                         id="author"
                         value={author}
                         onChange={(e) => setAuthor(e.target.value)}
-                        placeholder="e.g., Gandalf the Wise"
-                        className="bg-purple-700/30 border-purple-600/50 text-white placeholder:text-purple-300"
+                        placeholder="e.g., Sarah Chen"
+                        className="border-gray-300"
                         required
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="title" className="text-purple-200">
-                        Tale Title *
+                      <Label htmlFor="title" className="text-gray-700">
+                        Story Title *
                       </Label>
                       <Input
                         id="title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g., The Dragon's Lost Treasure"
-                        className="bg-purple-700/30 border-purple-600/50 text-white placeholder:text-purple-300"
+                        placeholder="e.g., Hidden Gems of Patagonia"
+                        className="border-gray-300"
                         required
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="excerpt" className="text-purple-200">
+                      <Label htmlFor="excerpt" className="text-gray-700">
                         Brief Excerpt
                       </Label>
                       <Textarea
                         id="excerpt"
                         value={excerpt}
                         onChange={(e) => setExcerpt(e.target.value)}
-                        placeholder="A short, intriguing summary of your tale..."
-                        className="bg-purple-700/30 border-purple-600/50 text-white placeholder:text-purple-300 h-20"
+                        placeholder="A short, intriguing summary of your travel story..."
+                        className="border-gray-300 h-20"
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="content" className="text-purple-200">
-                        Your Tale *
+                      <Label htmlFor="content" className="text-gray-700">
+                        Your Story *
                       </Label>
                       <Textarea
                         id="content"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        placeholder="Begin your magical story here... What wonders did you encounter? What challenges did you face? Share every enchanting detail!"
-                        className="bg-purple-700/30 border-purple-600/50 text-white placeholder:text-purple-300 h-64"
+                        placeholder="Share your travel experience in detail... What made this trip special? What challenges did you face? What would you recommend to other travelers?"
+                        className="border-gray-300 h-64"
                         required
                       />
                     </div>
 
                     <div>
-                      <Label className="text-purple-200">Tags</Label>
+                      <Label className="text-gray-700">Tags</Label>
                       <div className="flex space-x-2 mb-2">
                         <Input
                           value={currentTag}
                           onChange={(e) => setCurrentTag(e.target.value)}
                           placeholder="Add a tag..."
-                          className="bg-purple-700/30 border-purple-600/50 text-white placeholder:text-purple-300"
+                          className="border-gray-300"
                           onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
                         />
                         <Button
                           type="button"
                           onClick={addTag}
                           variant="outline"
-                          className="border-purple-600/50 text-purple-200 hover:bg-purple-700/50"
+                          className="border-gray-300"
                         >
                           <Plus className="h-4 w-4" />
                         </Button>
@@ -173,7 +172,7 @@ const Write = () => {
                           <Badge
                             key={index}
                             variant="secondary"
-                            className="bg-purple-600/50 text-purple-100 flex items-center"
+                            className="bg-blue-100 text-blue-800 flex items-center"
                           >
                             {tag}
                             <Button
@@ -181,7 +180,7 @@ const Write = () => {
                               variant="ghost"
                               size="sm"
                               onClick={() => removeTag(tag)}
-                              className="h-auto p-0 ml-2 text-purple-200 hover:text-red-400"
+                              className="h-auto p-0 ml-2 text-blue-600 hover:text-red-500"
                             >
                               <X className="h-3 w-3" />
                             </Button>
@@ -192,11 +191,11 @@ const Write = () => {
 
                     <Button
                       type="submit"
-                      className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                       size="lg"
                     >
                       <Send className="h-4 w-4 mr-2" />
-                      Share Your Tale
+                      Share Your Story
                     </Button>
                   </div>
                 </form>
@@ -206,41 +205,41 @@ const Write = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            <Card className="bg-purple-800/30 border-purple-700/50 backdrop-blur-sm">
+            <Card className="bg-white border border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white text-lg">Writing Tips</CardTitle>
+                <CardTitle className="text-gray-900 text-lg">Writing Tips</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3 text-purple-200 text-sm">
+              <CardContent className="space-y-3 text-gray-600 text-sm">
                 <div>
-                  <h4 className="text-purple-100 font-medium">✨ Be Descriptive</h4>
-                  <p>Paint vivid pictures with your words. What did the magic look like, sound like, feel like?</p>
+                  <h4 className="text-gray-900 font-medium">📍 Be Specific</h4>
+                  <p>Include specific locations, dates, and details that help readers visualize your journey.</p>
                 </div>
                 <div>
-                  <h4 className="text-purple-100 font-medium">🐉 Include Challenges</h4>
-                  <p>Great tales have obstacles. What went wrong? How did you overcome it?</p>
+                  <h4 className="text-gray-900 font-medium">🎯 Share Challenges</h4>
+                  <p>Don't just share the highlights - include obstacles and how you overcame them.</p>
                 </div>
                 <div>
-                  <h4 className="text-purple-100 font-medium">🎭 Show Emotion</h4>
-                  <p>How did your adventure make you feel? Fear, wonder, joy, surprise?</p>
+                  <h4 className="text-gray-900 font-medium">💡 Offer Tips</h4>
+                  <p>Help other travelers by sharing practical advice and lessons learned.</p>
                 </div>
                 <div>
-                  <h4 className="text-purple-100 font-medium">📚 Add Details</h4>
-                  <p>Include specific spells, creatures, locations, or magical items.</p>
+                  <h4 className="text-gray-900 font-medium">🏆 Be Authentic</h4>
+                  <p>Share genuine emotions and personal insights from your travel experience.</p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-purple-800/30 border-purple-700/50 backdrop-blur-sm">
+            <Card className="bg-white border border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white text-lg">Popular Tags</CardTitle>
+                <CardTitle className="text-gray-900 text-lg">Popular Tags</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {["Adventure", "Dragons", "Magic", "Comedy", "Mystery", "Potions", "Time Travel", "Crystals", "Familiars", "Ancient Magic"].map((tag) => (
+                  {["Adventure", "Culture", "Food", "Nature", "Photography", "Backpacking", "Luxury", "Budget", "Solo Travel", "Family"].map((tag) => (
                     <Badge
                       key={tag}
                       variant="outline"
-                      className="border-purple-600/50 text-purple-200 hover:bg-purple-700/50 cursor-pointer"
+                      className="border-gray-300 text-gray-600 hover:bg-blue-50 hover:border-blue-300 cursor-pointer"
                       onClick={() => {
                         if (!tags.includes(tag)) {
                           setTags([...tags, tag]);
