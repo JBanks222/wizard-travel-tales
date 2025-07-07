@@ -127,50 +127,53 @@ const Stories = () => {
         {/* Stories Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStories.map((story) => (
-            <Card key={story.id} className="bg-purple-800/30 border-purple-700/50 backdrop-blur-sm hover:bg-purple-700/40 transition-all duration-300 cursor-pointer group">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-white group-hover:text-purple-200 transition-colors">
-                      {story.title}
-                    </CardTitle>
-                    <CardDescription className="text-purple-200">
-                      by {story.author}
-                    </CardDescription>
+            <Link key={story.id} to={`/trip/${story.id}`}>
+              <Card className="bg-purple-800/30 border-purple-700/50 backdrop-blur-sm hover:bg-purple-700/40 transition-all duration-300 cursor-pointer group">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-white group-hover:text-purple-200 transition-colors">
+                        {story.title}
+                      </CardTitle>
+                      <CardDescription className="text-purple-200">
+                        by {story.author}
+                      </CardDescription>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-purple-300 hover:text-red-400 hover:bg-transparent p-1"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <Heart className="h-4 w-4" />
+                    </Button>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-purple-300 hover:text-red-400 hover:bg-transparent p-1"
-                  >
-                    <Heart className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-purple-100 mb-4 line-clamp-3">{story.excerpt}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {story.tags.map((tag, tagIndex) => (
-                    <Badge key={tagIndex} variant="secondary" className="bg-purple-600/50 text-purple-100 text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between text-sm text-purple-300">
-                  <div className="flex items-center space-x-4">
-                    <span className="flex items-center">
-                      <Heart className="h-3 w-3 mr-1" />
-                      {story.likes}
-                    </span>
-                    <span className="flex items-center">
-                      <BookOpen className="h-3 w-3 mr-1" />
-                      {story.readTime}
-                    </span>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-purple-100 mb-4 line-clamp-3">{story.excerpt}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {story.tags.map((tag, tagIndex) => (
+                      <Badge key={tagIndex} variant="secondary" className="bg-purple-600/50 text-purple-100 text-xs">
+                        {tag}
+                      </Badge>
+                    ))}
                   </div>
-                  <span>{story.date}</span>
-                </div>
-              </CardContent>
-            </Card>
+                  <div className="flex items-center justify-between text-sm text-purple-300">
+                    <div className="flex items-center space-x-4">
+                      <span className="flex items-center">
+                        <Heart className="h-3 w-3 mr-1" />
+                        {story.likes}
+                      </span>
+                      <span className="flex items-center">
+                        <BookOpen className="h-3 w-3 mr-1" />
+                        {story.readTime}
+                      </span>
+                    </div>
+                    <span>{story.date}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
 
