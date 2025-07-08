@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChevronUp, ChevronDown, MessageCircle, Share, Bookmark, TrendingUp, Clock, User, Search, Plus, Home, Flame } from "lucide-react";
+import { ChevronUp, ChevronDown, MessageCircle, Share, Bookmark, TrendingUp, Clock, User, Search, Plus, Home, Flame, Calendar, Users, MapPin, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import BookingModal from "@/components/BookingModal";
 
 const Index = () => {
   const [votes, setVotes] = useState<{[key: number]: number}>({
@@ -233,6 +234,13 @@ const Index = () => {
                         <span className="font-semibold">{post.subreddit}</span>
                         <span>•</span>
                         <span>Posted by {post.author}</span>
+                        {post.type === "travel_agent" && (
+                          <>
+                            <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 text-xs px-1">
+                              Travel Agent
+                            </Badge>
+                          </>
+                        )}
                         <span>•</span>
                         <span>{post.timeAgo} ago</span>
                       </div>
@@ -242,6 +250,28 @@ const Index = () => {
                           {post.title}
                         </h3>
                       </Link>
+
+                      {post.type === "travel_agent" && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                            <div className="flex items-center space-x-1">
+                              <Calendar className="h-4 w-4 text-blue-600" />
+                              <span className="text-gray-700">{post.duration}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <Users className="h-4 w-4 text-blue-600" />
+                              <span className="text-gray-700">{post.spotsLeft}/{post.totalSpots} spots</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <MapPin className="h-4 w-4 text-blue-600" />
+                              <span className="text-gray-700">{post.startDate}</span>
+                            </div>
+                            <div className="font-semibold text-blue-600">
+                              {post.price}
+                            </div>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="flex gap-3 mb-3">
                         <div className="flex-1">
@@ -262,6 +292,42 @@ const Index = () => {
                           className="w-24 h-20 object-cover rounded-lg flex-shrink-0"
                         />
                       </div>
+
+                      {/* Travel Agent Booking Section */}
+                      {post.type === "travel_agent" && (
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                              <div className="text-sm">
+                                <span className="text-orange-600 font-semibold">
+                                  {post.spotsLeft} spots remaining
+                                </span>
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                                <span className="text-sm text-gray-600">4.9 (127 reviews)</span>
+                              </div>
+                            </div>
+                            {post.type === "travel_agent" && post.price && post.duration && post.spotsLeft !== undefined && post.totalSpots && post.startDate && (
+                              <BookingModal trip={{
+                                id: post.id,
+                                title: post.title,
+                                price: post.price,
+                                duration: post.duration,
+                                spotsLeft: post.spotsLeft,
+                                totalSpots: post.totalSpots,
+                                startDate: post.startDate,
+                                author: post.author,
+                                image: post.image
+                              }}>
+                                <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                                  Book Now
+                                </Button>
+                              </BookingModal>
+                            )}
+                          </div>
+                        </div>
+                      )}
 
                       {/* Post Actions */}
                       <div className="flex items-center space-x-4 text-gray-500">
