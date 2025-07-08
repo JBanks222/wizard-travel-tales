@@ -1,161 +1,297 @@
-
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, BookOpen, Feather, Users, Globe, Camera } from "lucide-react";
+import { ChevronUp, ChevronDown, MessageCircle, Share, Bookmark, TrendingUp, Clock, User, Search, Plus, Home, Flame } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
-  const featuredStories = [
+  const [votes, setVotes] = useState<{[key: number]: number}>({
+    1: 127,
+    2: 89,
+    3: 156,
+    4: 203,
+    5: 78
+  });
+
+  const [userVotes, setUserVotes] = useState<{[key: number]: 'up' | 'down' | null}>({});
+
+  const handleVote = (storyId: number, voteType: 'up' | 'down') => {
+    const currentVote = userVotes[storyId];
+    let newVoteCount = votes[storyId];
+    
+    if (currentVote === voteType) {
+      // Remove vote
+      setUserVotes(prev => ({ ...prev, [storyId]: null }));
+      newVoteCount += voteType === 'up' ? -1 : 1;
+    } else {
+      // Change or add vote
+      if (currentVote) {
+        newVoteCount += voteType === 'up' ? 2 : -2;
+      } else {
+        newVoteCount += voteType === 'up' ? 1 : -1;
+      }
+      setUserVotes(prev => ({ ...prev, [storyId]: voteType }));
+    }
+    
+    setVotes(prev => ({ ...prev, [storyId]: newVoteCount }));
+  };
+
+  const posts = [
     {
-      title: "Hidden Gems of Patagonia",
-      author: "Sarah Chen",
-      excerpt: "Discovering untouched landscapes and local communities in the heart of South America...",
+      id: 1,
+      title: "Hidden Gems of Patagonia - 3 weeks of incredible landscapes and wildlife",
+      author: "u/SarahChen",
+      subreddit: "r/travel",
+      excerpt: "Just got back from Patagonia and wanted to share some incredible spots most tourists miss. The glacier hikes were life-changing and meeting local communities was the highlight...",
       tags: ["Adventure", "Nature", "South America"],
-      likes: 127
+      image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop",
+      timeAgo: "6h",
+      comments: 89
     },
     {
-      title: "Street Food Adventures in Bangkok",
-      author: "Marcus Rodriguez",
-      excerpt: "A culinary journey through the vibrant markets and hidden food stalls of Thailand's capital...",
+      id: 2,
+      title: "Bangkok Street Food Guide - Best hidden stalls from a local perspective",
+      author: "u/MarcusRodriguez",
+      subreddit: "r/food",
+      excerpt: "Living in Bangkok for 5 years taught me where locals actually eat. Here's my complete guide to the best street food that tourists never find...",
       tags: ["Food", "Culture", "Asia"],
-      likes: 89
+      image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop",
+      timeAgo: "12h",
+      comments: 156
     },
     {
-      title: "Northern Lights in Iceland",
-      author: "Elena Johansson",
-      excerpt: "Chasing the aurora borealis across Iceland's dramatic winter landscape...",
+      id: 3,
+      title: "Captured the Northern Lights in Iceland after 8 failed attempts [OC]",
+      author: "u/ElenaPhoto",
+      subreddit: "r/EarthPorn",
+      excerpt: "Finally got the shot I've been dreaming of! Here's everything I learned about Northern Lights photography and the best viewing spots in Iceland...",
       tags: ["Photography", "Nature", "Europe"],
-      likes: 156
+      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop",
+      timeAgo: "1d",
+      comments: 234
+    },
+    {
+      id: 4,
+      title: "Solo backpacking Vietnam - 1 month budget breakdown and safety tips",
+      author: "u/DavidBackpacker",
+      subreddit: "r/solotravel",
+      excerpt: "Just finished an amazing month in Vietnam spending only $800 total. Here's my complete budget breakdown and safety tips for solo female/male travelers...",
+      tags: ["Backpacking", "Budget", "Asia"],
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop",
+      timeAgo: "2d",
+      comments: 67
+    },
+    {
+      id: 5,
+      title: "Kenya Safari Experience - Great Migration timing and photography tips",
+      author: "u/MariaWildlife",
+      subreddit: "r/NatureIsFuckingLit",
+      excerpt: "Witnessed the Great Migration in Maasai Mara and it was beyond words. Sharing timing tips and camera settings that got me these shots...",
+      tags: ["Wildlife", "Photography", "Africa"],
+      image: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?w=400&h=300&fit=crop",
+      timeAgo: "3d",
+      comments: 445
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation Header */}
-      <header className="border-b border-gray-200 bg-white">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Globe className="h-8 w-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">TravelTales</h1>
+    <div className="min-h-screen bg-gray-50">
+      {/* Reddit-like Header */}
+      <header className="bg-white border-b border-gray-300 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center space-x-6">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-sm">T</span>
+              </div>
+              <span className="text-xl font-bold text-gray-900">TravelTales</span>
+            </Link>
+            
+            <nav className="hidden md:flex items-center space-x-1">
+              <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+                <Home className="h-4 w-4" />
+                <span>Home</span>
+              </Button>
+              <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+                <Flame className="h-4 w-4" />
+                <span>Popular</span>
+              </Button>
+            </nav>
           </div>
-          <nav className="flex items-center space-x-4">
-            <Link to="/stories">
-              <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                <BookOpen className="mr-2 h-4 w-4" />
-                Browse Stories
-              </Button>
-            </Link>
+
+          <div className="flex-1 max-w-2xl mx-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search TravelTales"
+                className="w-full pl-10 pr-4 py-2 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
             <Link to="/write">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                <Feather className="mr-2 h-4 w-4" />
-                Share Story
+              <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                <Plus className="mr-1 h-4 w-4" />
+                Create Post
               </Button>
             </Link>
-          </nav>
+          </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-50 to-indigo-100 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">
-              Share Your Travel Adventures
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Connect with fellow travelers, discover amazing destinations, and share your most memorable journeys with a passionate community.
-            </p>
-            <div className="flex justify-center space-x-4">
-              <Link to="/stories">
-                <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                  <BookOpen className="mr-2 h-5 w-5" />
-                  Explore Stories
-                </Button>
-              </Link>
-              <Link to="/write">
-                <Button size="lg" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50">
-                  <Feather className="mr-2 h-5 w-5" />
-                  Share Your Story
-                </Button>
-              </Link>
+      <div className="max-w-6xl mx-auto flex gap-6 p-4">
+        {/* Main Content */}
+        <main className="flex-1">
+          {/* Sort Options */}
+          <div className="bg-white rounded-lg mb-4 p-3 border border-gray-300">
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" className="text-blue-600 bg-blue-50">
+                <Flame className="mr-1 h-4 w-4" />
+                Hot
+              </Button>
+              <Button variant="ghost" size="sm">
+                <TrendingUp className="mr-1 h-4 w-4" />
+                Top
+              </Button>
+              <Button variant="ghost" size="sm">
+                <Clock className="mr-1 h-4 w-4" />
+                New
+              </Button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Featured Stories */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">Featured Stories</h3>
-            <p className="text-gray-600">Discover inspiring travel experiences from our community</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredStories.map((story, index) => (
-              <Card key={index} className="border border-gray-200 hover:shadow-lg transition-all duration-300">
-                <CardHeader>
-                  <CardTitle className="text-gray-900">{story.title}</CardTitle>
-                  <CardDescription className="text-gray-600">by {story.author}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-700 mb-4">{story.excerpt}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {story.tags.map((tag, tagIndex) => (
-                      <Badge key={tagIndex} variant="secondary" className="bg-blue-100 text-blue-800">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-500 text-sm">{story.likes} likes</span>
-                    <Button size="sm" variant="ghost" className="text-blue-600 hover:bg-blue-50">
-                      Read More
-                    </Button>
+          {/* Posts */}
+          <div className="space-y-2">
+            {posts.map((post) => (
+              <Card key={post.id} className="bg-white border border-gray-300 hover:border-gray-400 transition-colors">
+                <CardContent className="p-0">
+                  <div className="flex">
+                    {/* Voting Section */}
+                    <div className="w-12 p-2 bg-gray-50 flex flex-col items-center justify-start space-y-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`p-1 h-6 w-6 ${userVotes[post.id] === 'up' ? 'text-orange-500' : 'text-gray-400 hover:text-orange-500'}`}
+                        onClick={() => handleVote(post.id, 'up')}
+                      >
+                        <ChevronUp className="h-4 w-4" />
+                      </Button>
+                      <span className={`text-xs font-bold ${userVotes[post.id] === 'up' ? 'text-orange-500' : userVotes[post.id] === 'down' ? 'text-blue-500' : 'text-gray-700'}`}>
+                        {votes[post.id]}
+                      </span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`p-1 h-6 w-6 ${userVotes[post.id] === 'down' ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}`}
+                        onClick={() => handleVote(post.id, 'down')}
+                      >
+                        <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    {/* Post Content */}
+                    <div className="flex-1 p-3">
+                      <div className="flex items-center space-x-2 text-xs text-gray-500 mb-2">
+                        <span className="font-semibold">{post.subreddit}</span>
+                        <span>•</span>
+                        <span>Posted by {post.author}</span>
+                        <span>•</span>
+                        <span>{post.timeAgo} ago</span>
+                      </div>
+
+                      <Link to={`/trip/${post.id}`} className="block group">
+                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 mb-2 line-clamp-2">
+                          {post.title}
+                        </h3>
+                      </Link>
+
+                      <div className="flex gap-3 mb-3">
+                        <div className="flex-1">
+                          <p className="text-gray-700 text-sm line-clamp-3 mb-3">
+                            {post.excerpt}
+                          </p>
+                          <div className="flex flex-wrap gap-1 mb-3">
+                            {post.tags.map((tag, index) => (
+                              <Badge key={index} variant="secondary" className="bg-gray-100 text-gray-700 text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-24 h-20 object-cover rounded-lg flex-shrink-0"
+                        />
+                      </div>
+
+                      {/* Post Actions */}
+                      <div className="flex items-center space-x-4 text-gray-500">
+                        <Button variant="ghost" size="sm" className="text-gray-500 hover:bg-gray-100 p-1">
+                          <MessageCircle className="mr-1 h-4 w-4" />
+                          <span className="text-xs">{post.comments} Comments</span>
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-gray-500 hover:bg-gray-100 p-1">
+                          <Share className="mr-1 h-4 w-4" />
+                          <span className="text-xs">Share</span>
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-gray-500 hover:bg-gray-100 p-1">
+                          <Bookmark className="mr-1 h-4 w-4" />
+                          <span className="text-xs">Save</span>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </main>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Camera className="h-8 w-8 text-blue-600" />
+        {/* Sidebar */}
+        <aside className="w-80 space-y-4">
+          <Card className="bg-white border border-gray-300">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-gray-900 mb-3">About Community</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Welcome to TravelTales! A community for sharing travel experiences, tips, and adventures from around the world.
+              </p>
+              <div className="grid grid-cols-2 gap-4 text-center text-sm">
+                <div>
+                  <div className="font-semibold text-gray-900">2.1M</div>
+                  <div className="text-gray-500">Members</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-gray-900">8.4k</div>
+                  <div className="text-gray-500">Online</div>
+                </div>
               </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Share Your Journey</h4>
-              <p className="text-gray-600">Document your travels with photos, stories, and tips for fellow adventurers.</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-blue-600" />
-              </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Travel Community</h4>
-              <p className="text-gray-600">Connect with like-minded travelers and discover new perspectives on destinations.</p>
-            </div>
-            <div className="text-center">
-              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <MapPin className="h-8 w-8 text-blue-600" />
-              </div>
-              <h4 className="text-xl font-semibold text-gray-900 mb-2">Discover Places</h4>
-              <p className="text-gray-600">Find hidden gems and popular destinations through authentic traveler experiences.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+              <Link to="/write" className="block mt-4">
+                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                  Create Post
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-600">© 2024 TravelTales. All rights reserved.</p>
-        </div>
-      </footer>
+          <Card className="bg-white border border-gray-300">
+            <CardContent className="p-4">
+              <h3 className="font-semibold text-gray-900 mb-3">Popular Destinations</h3>
+              <div className="space-y-2">
+                {["Iceland", "Japan", "Patagonia", "Thailand", "Kenya"].map((destination) => (
+                  <div key={destination} className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">{destination}</span>
+                    <Badge variant="outline" className="text-xs">Trending</Badge>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </aside>
+      </div>
     </div>
   );
 };

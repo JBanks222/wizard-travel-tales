@@ -1,20 +1,19 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Globe, ArrowLeft, Plus, X, Send } from "lucide-react";
+import { Search, Plus, Home, Flame, X, Upload, Link as LinkIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
 const Write = () => {
   const [title, setTitle] = useState("");
-  const [excerpt, setExcerpt] = useState("");
   const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
+  const [subreddit, setSubreddit] = useState("r/travel");
+  const [postType, setPostType] = useState<"text" | "link" | "image">("text");
   const [currentTag, setCurrentTag] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const { toast } = useToast();
@@ -33,227 +32,189 @@ const Write = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!title.trim() || !content.trim() || !author.trim()) {
+    if (!title.trim() || !content.trim()) {
       toast({
         title: "Missing Information",
-        description: "Please fill in all required fields to share your story.",
+        description: "Please fill in all required fields to create your post.",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Story Shared Successfully! ✨",
-      description: "Your travel story has been added to the collection.",
+      title: "Post Created Successfully! 🎉",
+      description: "Your post has been shared with the community.",
     });
 
-    // Reset form
     setTitle("");
-    setExcerpt("");
     setContent("");
-    setAuthor("");
     setTags([]);
     setCurrentTag("");
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation Header */}
-      <header className="border-b border-gray-200 bg-white">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link to="/">
-              <Button variant="ghost" size="sm" className="text-gray-700 hover:text-blue-600">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back
-              </Button>
+      {/* Reddit-like Header */}
+      <header className="bg-white border-b border-gray-300 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center space-x-6">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-sm">T</span>
+              </div>
+              <span className="text-xl font-bold text-gray-900">TravelTales</span>
             </Link>
-            <div className="flex items-center space-x-2">
-              <Globe className="h-6 w-6 text-blue-600" />
-              <h1 className="text-xl font-bold text-gray-900">Share Your Story</h1>
+            
+            <nav className="hidden md:flex items-center space-x-1">
+              <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+                <Home className="h-4 w-4" />
+                <span>Home</span>
+              </Button>
+              <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+                <Flame className="h-4 w-4" />
+                <span>Popular</span>
+              </Button>
+            </nav>
+          </div>
+
+          <div className="flex-1 max-w-2xl mx-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search TravelTales"
+                className="w-full pl-10 pr-4 py-2 bg-gray-100 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Form */}
-          <div className="lg:col-span-2">
-            <Card className="bg-white border border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-gray-900 flex items-center">
-                  <Globe className="h-5 w-5 mr-2 text-blue-600" />
-                  Share Your Travel Experience
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  Tell fellow travelers about your amazing journey
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <form onSubmit={handleSubmit}>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="author" className="text-gray-700">
-                        Your Name *
-                      </Label>
-                      <Input
-                        id="author"
-                        value={author}
-                        onChange={(e) => setAuthor(e.target.value)}
-                        placeholder="e.g., Sarah Chen"
-                        className="border-gray-300"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="title" className="text-gray-700">
-                        Story Title *
-                      </Label>
-                      <Input
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g., Hidden Gems of Patagonia"
-                        className="border-gray-300"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="excerpt" className="text-gray-700">
-                        Brief Excerpt
-                      </Label>
-                      <Textarea
-                        id="excerpt"
-                        value={excerpt}
-                        onChange={(e) => setExcerpt(e.target.value)}
-                        placeholder="A short, intriguing summary of your travel story..."
-                        className="border-gray-300 h-20"
-                      />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="content" className="text-gray-700">
-                        Your Story *
-                      </Label>
-                      <Textarea
-                        id="content"
-                        value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        placeholder="Share your travel experience in detail... What made this trip special? What challenges did you face? What would you recommend to other travelers?"
-                        className="border-gray-300 h-64"
-                        required
-                      />
-                    </div>
-
-                    <div>
-                      <Label className="text-gray-700">Tags</Label>
-                      <div className="flex space-x-2 mb-2">
-                        <Input
-                          value={currentTag}
-                          onChange={(e) => setCurrentTag(e.target.value)}
-                          placeholder="Add a tag..."
-                          className="border-gray-300"
-                          onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                        />
-                        <Button
-                          type="button"
-                          onClick={addTag}
-                          variant="outline"
-                          className="border-gray-300"
-                        >
-                          <Plus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {tags.map((tag, index) => (
-                          <Badge
-                            key={index}
-                            variant="secondary"
-                            className="bg-blue-100 text-blue-800 flex items-center"
-                          >
-                            {tag}
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => removeTag(tag)}
-                              className="h-auto p-0 ml-2 text-blue-600 hover:text-red-500"
-                            >
-                              <X className="h-3 w-3" />
-                            </Button>
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                      size="lg"
-                    >
-                      <Send className="h-4 w-4 mr-2" />
-                      Share Your Story
-                    </Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
+      <div className="max-w-4xl mx-auto p-4">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Create a post</h1>
+          <div className="flex items-center space-x-2 text-sm text-gray-600">
+            <span>Choose a community</span>
           </div>
+        </div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            <Card className="bg-white border border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-gray-900 text-lg">Writing Tips</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3 text-gray-600 text-sm">
-                <div>
-                  <h4 className="text-gray-900 font-medium">📍 Be Specific</h4>
-                  <p>Include specific locations, dates, and details that help readers visualize your journey.</p>
-                </div>
-                <div>
-                  <h4 className="text-gray-900 font-medium">🎯 Share Challenges</h4>
-                  <p>Don't just share the highlights - include obstacles and how you overcame them.</p>
-                </div>
-                <div>
-                  <h4 className="text-gray-900 font-medium">💡 Offer Tips</h4>
-                  <p>Help other travelers by sharing practical advice and lessons learned.</p>
-                </div>
-                <div>
-                  <h4 className="text-gray-900 font-medium">🏆 Be Authentic</h4>
-                  <p>Share genuine emotions and personal insights from your travel experience.</p>
-                </div>
-              </CardContent>
-            </Card>
+        <Card className="bg-white border border-gray-300 mb-6">
+          <CardHeader className="pb-4">
+            <div className="flex items-center space-x-4">
+              <Button
+                variant={postType === "text" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setPostType("text")}
+                className="flex items-center space-x-2"
+              >
+                <span>📝</span>
+                <span>Text</span>
+              </Button>
+              <Button
+                variant={postType === "image" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setPostType("image")}
+                className="flex items-center space-x-2"
+              >
+                <Upload className="h-4 w-4" />
+                <span>Image</span>
+              </Button>
+              <Button
+                variant={postType === "link" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setPostType("link")}
+                className="flex items-center space-x-2"
+              >
+                <LinkIcon className="h-4 w-4" />
+                <span>Link</span>
+              </Button>
+            </div>
+          </CardHeader>
+          
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <select
+                  value={subreddit}
+                  onChange={(e) => setSubreddit(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="r/travel">r/travel</option>
+                  <option value="r/solotravel">r/solotravel</option>
+                  <option value="r/backpacking">r/backpacking</option>
+                  <option value="r/food">r/food</option>
+                  <option value="r/EarthPorn">r/EarthPorn</option>
+                </select>
+              </div>
 
-            <Card className="bg-white border border-gray-200">
-              <CardHeader>
-                <CardTitle className="text-gray-900 text-lg">Popular Tags</CardTitle>
-              </CardHeader>
-              <CardContent>
+              <div>
+                <Input
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="text-lg font-medium border-gray-300"
+                  required
+                />
+              </div>
+
+              <div>
+                <Textarea
+                  placeholder="Text (optional)"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="min-h-32 border-gray-300 resize-none"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label className="text-gray-700 text-sm">Tags</Label>
+                <div className="flex space-x-2 mb-2">
+                  <Input
+                    value={currentTag}
+                    onChange={(e) => setCurrentTag(e.target.value)}
+                    placeholder="Add a tag..."
+                    className="border-gray-300"
+                    onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                  />
+                  <Button
+                    type="button"
+                    onClick={addTag}
+                    variant="outline"
+                    className="border-gray-300"
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                </div>
                 <div className="flex flex-wrap gap-2">
-                  {["Adventure", "Culture", "Food", "Nature", "Photography", "Backpacking", "Luxury", "Budget", "Solo Travel", "Family"].map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="outline"
-                      className="border-gray-300 text-gray-600 hover:bg-blue-50 hover:border-blue-300 cursor-pointer"
-                      onClick={() => {
-                        if (!tags.includes(tag)) {
-                          setTags([...tags, tag]);
-                        }
-                      }}
-                    >
+                  {tags.map((tag, index) => (
+                    <Badge key={index} variant="secondary" className="bg-gray-100 text-gray-700 flex items-center">
                       {tag}
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeTag(tag)}
+                        className="h-auto p-0 ml-2 text-gray-600 hover:text-red-500"
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
                     </Badge>
                   ))}
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button variant="outline" type="button">
+                  Save Draft
+                </Button>
+                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  Post
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
