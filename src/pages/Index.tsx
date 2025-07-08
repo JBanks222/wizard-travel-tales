@@ -47,10 +47,29 @@ const Index = () => {
       tags: ["Adventure", "Nature", "South America"],
       image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop",
       timeAgo: "6h",
-      comments: 89
+      comments: 89,
+      type: "post"
     },
     {
       id: 2,
+      title: "🏔️ GUIDED TOUR: Iceland Northern Lights Photography Expedition - March 2025",
+      author: "u/ArcticAdventures_Pro",
+      subreddit: "r/travel • r/photography",
+      excerpt: "Join our expert-led 7-day Northern Lights photography tour in Iceland! Small groups (max 8 people), professional guide, all equipment included. March 15-22, 2025.",
+      tags: ["Photography", "Guided Tour", "Northern Lights", "Iceland"],
+      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop",
+      timeAgo: "2h",
+      comments: 156,
+      type: "travel_agent",
+      price: "$2,850",
+      duration: "7 days",
+      spotsLeft: 5,
+      totalSpots: 8,
+      startDate: "March 15, 2025",
+      userType: "Travel Agent"
+    },
+    {
+      id: 3,
       title: "Bangkok Street Food Guide - Best hidden stalls from a local perspective",
       author: "u/MarcusRodriguez",
       subreddit: "r/food",
@@ -58,21 +77,29 @@ const Index = () => {
       tags: ["Food", "Culture", "Asia"],
       image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop",
       timeAgo: "12h",
-      comments: 156
-    },
-    {
-      id: 3,
-      title: "Captured the Northern Lights in Iceland after 8 failed attempts [OC]",
-      author: "u/ElenaPhoto",
-      subreddit: "r/EarthPorn",
-      excerpt: "Finally got the shot I've been dreaming of! Here's everything I learned about Northern Lights photography and the best viewing spots in Iceland...",
-      tags: ["Photography", "Nature", "Europe"],
-      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=400&h=300&fit=crop",
-      timeAgo: "1d",
-      comments: 234
+      comments: 156,
+      type: "post"
     },
     {
       id: 4,
+      title: "🌍 GROUP TRIP: Kenya Safari & Cultural Experience - June 2025",
+      author: "u/SafariExperts_Kenya",
+      subreddit: "r/travel • r/NatureIsFuckingLit",
+      excerpt: "Experience the Great Migration in Maasai Mara with our local Kenyan guides. 10-day adventure including game drives, Maasai village visits, and conservation projects.",
+      tags: ["Safari", "Wildlife", "Cultural", "Africa", "Group Trip"],
+      image: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?w=400&h=300&fit=crop",
+      timeAgo: "4h",
+      comments: 67,
+      type: "travel_agent",
+      price: "$3,200",
+      duration: "10 days", 
+      spotsLeft: 3,
+      totalSpots: 12,
+      startDate: "June 10, 2025",
+      userType: "Travel Agent"
+    },
+    {
+      id: 5,
       title: "Solo backpacking Vietnam - 1 month budget breakdown and safety tips",
       author: "u/DavidBackpacker",
       subreddit: "r/solotravel",
@@ -80,18 +107,26 @@ const Index = () => {
       tags: ["Backpacking", "Budget", "Asia"],
       image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop",
       timeAgo: "2d",
-      comments: 67
+      comments: 67,
+      type: "post"
     },
     {
-      id: 5,
-      title: "Kenya Safari Experience - Great Migration timing and photography tips",
-      author: "u/MariaWildlife",
-      subreddit: "r/NatureIsFuckingLit",
-      excerpt: "Witnessed the Great Migration in Maasai Mara and it was beyond words. Sharing timing tips and camera settings that got me these shots...",
-      tags: ["Wildlife", "Photography", "Africa"],
-      image: "https://images.unsplash.com/photo-1466721591366-2d5fba72006d?w=400&h=300&fit=crop",
-      timeAgo: "3d",
-      comments: 445
+      id: 6,
+      title: "🏝️ ISLAND HOPPING: Greek Islands Small Group Adventure - September 2025",
+      author: "u/MediterraneanVoyages",
+      subreddit: "r/travel • r/europe",
+      excerpt: "Discover hidden Greek islands beyond Santorini! 14-day small group tour visiting 6 islands with local guides, traditional cooking classes, and private beach access.",
+      tags: ["Islands", "Greece", "Small Group", "Cultural"],
+      image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop",
+      timeAgo: "1d",
+      comments: 234,
+      type: "travel_agent",
+      price: "$2,450",
+      duration: "14 days",
+      spotsLeft: 8,
+      totalSpots: 14,
+      startDate: "September 5, 2025",
+      userType: "Travel Agent"
     }
   ];
 
