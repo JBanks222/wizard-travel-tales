@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChevronUp, ChevronDown, MessageCircle, Share, Bookmark, TrendingUp, Clock, User, Search, Plus, Home, Flame, Calendar, Users, MapPin, Star, BookOpen, Feather, Globe, Camera, ArrowRight, Mail, Shield, Award, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import BookingModal from "@/components/ui/booking-modal";
+import TravelMap from "@/components/ui/travel-map";
 
 const Index = () => {
   const [votes, setVotes] = useState<{[key: number]: number}>({
@@ -425,6 +426,12 @@ const Index = () => {
                 <Flame className="h-4 w-4" />
                 <span>Popular</span>
               </Button>
+              <Link to="/map">
+                <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+                  <Globe className="h-4 w-4" />
+                  <span>Map</span>
+                </Button>
+              </Link>
             </nav>
           </div>
 
@@ -470,6 +477,19 @@ const Index = () => {
               </Button>
             </div>
           </div>
+
+          {/* Travel Map Section */}
+          <Card className="bg-white border border-gray-300 mb-4">
+            <CardHeader>
+              <CardTitle className="text-black font-display flex items-center">
+                <Globe className="h-5 w-5 mr-2 text-gold" />
+                Global Travel Heat Map
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TravelMap />
+            </CardContent>
+          </Card>
 
           {/* Posts */}
           <div className="space-y-2">
